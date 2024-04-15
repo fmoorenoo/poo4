@@ -1,9 +1,15 @@
 import random
 def posicionLista(lista:list, posicion:int):
     try:
-        return lista[posicion]
+        r = lista[posicion]
+        return r
     except IndexError:
-        print("IndexError - Realizamos tarea de control de cierre")
+        print("IndexError!")
+    else:
+        print(f"Your wishes are my command: {r}")
+    finally:
+        print("Have a good day!")
+
 
 if __name__ == "__main__":
     def main()->None:
