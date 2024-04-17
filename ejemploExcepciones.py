@@ -1,43 +1,48 @@
 class EjemploExcepciones:
     # ZeroDivisionError
-    def dividirEntreCero(self, a:int, b:int) ->int:
-        if (b == 0):
+    def zeroDivisionError(self, num: int, den: int) -> int:
+        if den == 0:
             raise ZeroDivisionError
-
-        return a // b
+        return num // den
 
 
     # ValueError
-    def valorIncorrecto(self, a:int, b:int):
-        try:
-            return a / b
+    def valueError(self) -> int:
+        a = 0.5
+        if isinstance(a, int):
+            return a
+        
+        raise ValueError
 
-        except ValueError:
-            raise ValueError
-            
 
     # FileNotFoundError
-    def archivoNoEncontrado(self, archivo):
+    def fileNotFoundError(self) -> str:
+        archivo = "archivoImaginario.txt" 
         try:
             with open(archivo, 'r') as file:
                 contenido = file.read()
             return contenido
-
         except FileNotFoundError:
             raise FileNotFoundError
 
 
     # TypeError
-    def errorDeTipo(self):
+    def typeError(self, a: int, b: int) -> int:
         try:
-            a * b
-
+            return a * b
         except TypeError:
             raise TypeError
 
-    
+
+    # PermissionError
+    def permissionError(self) -> None:
+        pass
+
+
     # IndexError
-    def errorDePosicion(self, lista, posicion):
+    def indexError(self):
+        lista = ["a", "b", "c"]
+        posicion = 5
         try:
             return lista[posicion]
 
@@ -46,14 +51,23 @@ class EjemploExcepciones:
     
 
     # KeyboardInterrupt
-    def interrupcionTeclado(self):
+    def keyboardInterrupt(self) -> None:
         try:
             while True:
                 pass
-
         except KeyboardInterrupt:
             raise KeyboardInterrupt
 
+
     # UnicodeDecodeError
+    def unicodeDecodeError(self) -> None:
+        pass
+
 
     # AttributeError
+    def attributeError(self) -> None:
+        try:
+            objeto = None
+            objeto.atributo
+        except AttributeError:
+            raise AttributeError

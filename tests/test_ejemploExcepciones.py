@@ -1,45 +1,58 @@
 import pytest
+
 from ejemploExcepciones import EjemploExcepciones
 
-def test_dividirEntreCero():
+def test_zeroDivisionError():
     ejemplo = EjemploExcepciones()
     with pytest.raises(ZeroDivisionError):
-        ejemplo.dividirEntreCero(a=2, b=0)
+        ejemplo.zeroDivisionError(num = 2, den = 0)
 
-    assert ejemplo.dividirEntreCero(a = 4, b = 2) == 2
+    assert ejemplo.zeroDivisionError(num = 4, den = 2) == 2
 
-
-def test_valorIncorrecto():
+#ValueError
+def test_valueError():
     ejemplo = EjemploExcepciones()
     with pytest.raises(ValueError):
-        ejemplo.valorIncorrecto(a=2, b=0.5)
+        ejemplo.valueError()
 
-    assert ejemplo.valorIncorrecto(a = 4, b = 2) == 2
-
-
-def test_archivoNoEncontrado():
+#FileNotFoundError
+def test_fileNotFoundError():
     ejemplo = EjemploExcepciones()
     with pytest.raises(FileNotFoundError):
-        ejemplo.dividirEntreCero()
+        ejemplo.fileNotFoundError()
 
-
-def test_errorDeTipo():
+#TypeError
+def test_typeError():
     ejemplo = EjemploExcepciones()
     with pytest.raises(TypeError):
-        ejemplo.errorDeTipo(a=2, b="0")
+        ejemplo.typeError()
 
-    assert ejemplo.errorDeTipo(a = 4, b = 2) == 8
+#PermissionError
+def test_permissionError():
+    ejemplo = EjemploExcepciones()
+    with pytest.raises(PermissionError):
+        ejemplo.permissionError()
 
-
-def test_errorDePosicion():
+#IndexError
+def test_indexError():
     ejemplo = EjemploExcepciones()
     with pytest.raises(IndexError):
-        ejemplo.errorDePosicion(["a", "b", "c"], 5)
+        ejemplo.indexError()
 
-
-def test_interrupcionTeclado():
+#KeyboardInterrupt
+def test_keyboardInterrupt():
     ejemplo = EjemploExcepciones()
     with pytest.raises(KeyboardInterrupt):
-        ejemplo.interrupcionTeclado()
+        ejemplo.keyboardInterrupt()
 
-    assert ejemplo.interrupcionTeclado(a = 4, b = 2) == 2
+#UnicodeDecodeError
+def test_unicodeDecodeError():
+    ejemplo = EjemploExcepciones()
+    with pytest.raises(UnicodeDecodeError):
+        ejemplo.unicodeDecodeError()
+
+#AttributeError
+def test_attributeError():
+    ejemplo = EjemploExcepciones()
+    with pytest.raises(AttributeError):
+        ejemplo.attributeError()
