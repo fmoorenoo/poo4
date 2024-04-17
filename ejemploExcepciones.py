@@ -8,22 +8,23 @@ class EjemploExcepciones:
 
 
     # ValueError
-    def valorIncorrecto(self, valor):
+    def valorIncorrecto(self, a:int, b:int):
         try:
-            return numero
+            return a / b
+
         except ValueError:
             raise ValueError
             
 
     # FileNotFoundError
-    def archivoNoEncontrado(self):
+    def archivoNoEncontrado(self, archivo):
         try:
             with open(archivo, 'r') as file:
                 contenido = file.read()
             return contenido
 
         except FileNotFoundError:
-            raise FileNotFoundError("No se pudo encontrar el archivo")
+            raise FileNotFoundError
 
 
     # TypeError
@@ -32,15 +33,27 @@ class EjemploExcepciones:
             a * b
 
         except TypeError:
-            raise TypeError("No se puede operar con el tipo de dato proporcionado")
+            raise TypeError
 
     
     # IndexError
+    def errorDePosicion(self, lista, posicion):
+        try:
+            return lista[posicion]
+
+        except IndexError:
+            raise IndexError
+    
 
     # KeyboardInterrupt
+    def interrupcionTeclado(self):
+        try:
+            while True:
+                pass
+
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
 
     # UnicodeDecodeError
 
     # AttributeError
-
-    pass
