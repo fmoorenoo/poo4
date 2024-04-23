@@ -7,8 +7,7 @@ class EjemploExcepciones:
 
 
     # ValueError
-    def valueError(self) -> int:
-        a = 0.5
+    def valueError(self, a=0.5) -> int:
         if isinstance(a, int):
             return a
         
@@ -29,15 +28,19 @@ class EjemploExcepciones:
     # TypeError
     def typeError(self, a: int, b: int) -> int:
         try:
-            return a * b
+            return a * "b"
         except TypeError:
             raise TypeError
 
 
     # PermissionError
     def permissionError(self) -> None:
-        pass
-
+        try:
+            archivo = open("archivoPrueba.txt", "r")
+            archivo.write("hola")
+        except PermissionError:
+            raise PermissionError
+        
 
     # IndexError
     def indexError(self):
@@ -53,15 +56,14 @@ class EjemploExcepciones:
     # KeyboardInterrupt
     def keyboardInterrupt(self) -> None:
         try:
-            while True:
-                pass
+            pass
         except KeyboardInterrupt:
             raise KeyboardInterrupt
 
 
     # UnicodeDecodeError
-    def unicodeDecodeError(self) -> None:
-        pass
+    def unicodeDecodeError(self):
+        raise UnicodeDecodeError()
 
 
     # AttributeError
