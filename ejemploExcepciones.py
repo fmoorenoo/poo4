@@ -56,14 +56,21 @@ class EjemploExcepciones:
     # KeyboardInterrupt
     def keyboardInterrupt(self) -> None:
         try:
-            pass
-        except KeyboardInterrupt:
+            for x in range(10):
+                input()
+                if not KeyboardInterrupt:
+                    pass
+        except:
             raise KeyboardInterrupt
 
 
     # UnicodeDecodeError
     def unicodeDecodeError(self):
-        raise UnicodeDecodeError()
+        try:
+            texto = b'\xff'
+            decodificador = texto.decode('utf-8')
+        except UnicodeDecodeError as e:
+            raise UnicodeDecodeError(e.encoding, e.object, e.start, e.end, e.reason)
 
 
     # AttributeError
