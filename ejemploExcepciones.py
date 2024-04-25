@@ -10,7 +10,6 @@ class EjemploExcepciones:
     def valueError(self, a=0.5) -> int:
         if isinstance(a, int):
             return a
-        
         raise ValueError
 
 
@@ -38,7 +37,7 @@ class EjemploExcepciones:
         try:
             archivo = open("archivoPrueba.txt", "r")
             archivo.write("hola")
-        except PermissionError:
+        except:
             raise PermissionError
         
 
@@ -48,7 +47,6 @@ class EjemploExcepciones:
         posicion = 5
         try:
             return lista[posicion]
-
         except IndexError:
             raise IndexError
     
