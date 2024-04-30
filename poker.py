@@ -2,17 +2,15 @@ from __future__ import annotations
 
 
 def load_card_glyphs(path: str = 'cards.dat') -> dict[str, str]:
-    '''Returns a dictionary where keys are suits
-    and values are strings of card glyphs with no separators'''
     diccionario = {"♣": "🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞", "♦": "🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎", "❤": "🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾", "♠": "🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮"}
     return diccionario
-    
+
 
 class Card:
-    CLUBS = '♣'
-    DIAMONDS = '◆'
-    HEARTS = '❤'
-    SPADES = '♠'
+    CLUBS = "♣"
+    DIAMONDS = "♦"
+    HEARTS = "❤"
+    SPADES = "♠"
     #           1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13
     SYMBOLS = ('A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K')
     A_VALUE = 1
@@ -20,32 +18,45 @@ class Card:
     GLYPHS = load_card_glyphs()
 
     def __init__(self, value: int | str, suit: str):
-        '''Notas:
-        - Si el suit(palo) no es válido hay que elevar una excepción de tipo
-        InvalidCardError() con el mensaje: 🃏 Invalid card: {repr(suit)} is not a supported suit
-        - Si el value(como entero) no es válido (es menor que 1 o mayor que 13) hay que
-        elevar una excepción de tipo InvalidCardError() con el mensaje:
-        🃏 Invalid card: {repr(value)} is not a supported value
-        - Si el value(como string) no es válido hay que elevar una excepción de tipo
-        🃏 Invalid card: {repr(value)} is not a supported symbol
-
-        - self.suit deberá almacenar el palo de la carta '♣◆❤♠'.
-        - self.value deberá almacenar el valor de la carta (1-13)'''
-        ...
+        if suit not in [self.CLUBS, self.DIAMONDS, self.HEARTS, self.SPADES]:
+            raise InvalidCardError(f"🃏 Invalid card: {repr(suit)} is not a supported suit")
+        
+        if isinstance(value, int):
+            if value < 1 or value > 13:
+                raise InvalidCardError(f"🃏 Invalid card: {repr(value)} is not a supported value")
+            self.value = value
+        
+        elif isinstance(value, str):
+            if value not in Card.SYMBOLS:
+                raise InvalidCardError(f"🃏 Invalid card: {repr(value)} is not a supported symbol")
+            self.value = value
+        self.suit = suit
 
     @property
     def cmp_value(self) -> int:
         '''Devuelve el valor (numérico) de la carta para comparar con otras.
         Tener en cuenta el AS.'''
-        ...
+        if isinstance(self.value, int):
+            return self.value
+        elif self.value == 'A': 
+            return 1
+        elif self.value == 'J': 
+            return 11
+        elif self.value == 'Q': 
+            return 12
+        elif self.value == 'K': 
+            return 13
 
     def __repr__(self):
         '''Devuelve el glifo de la carta'''
-        ...
+        return self.GLYPHS[self.suit][self.cmp_value - 1]
+
 
     def __eq__(self, other: Card | object):
-        '''Indica si dos cartas son iguales'''
-        ...
+        if self.suit == other.suit:
+            if self.value == other.value:
+                return True
+        return False
 
     def __lt__(self, other: Card):
         '''Indica si una carta vale menos que otra'''
@@ -53,7 +64,10 @@ class Card:
 
     def __gt__(self, other: Card):
         '''Indica si una carta vale más que otra'''
-        ...
+        if self.cmp_value > other.cmp_value:
+            return True
+        return False
+
 
     def __add__(self, other: Card) -> Card:
         '''Suma de dos cartas:
@@ -62,24 +76,30 @@ class Card:
         de 13 se convertirá en un AS.'''
         ...
 
+
     def is_ace(self) -> bool:
         '''Indica si una carta es un AS'''
         ...
 
+
     @classmethod
     def get_available_suits(cls) -> str:
-        '''Devuelve todos los palos como una cadena de texto'''
-        ...
+        return cls.CLUBS + cls.DIAMONDS + cls.HEARTS + cls.SPADES
+
 
     @classmethod
     def get_cards_by_suit(cls, suit: str):
-        '''Función generadora que devuelve los glifos de las cartas por su palo'''
-        ...
+        lista = []
+        for glifo in cls.GLYPHS[suit]:
+            lista.append(glifo)
+        return lista
 
 
 class InvalidCardError(Exception):
-    '''Clase que representa un error de carta inválida.
-    - El mensaje por defecto de esta excepción debe ser: 🃏 Invalid card
-    - Si se añaden otros mensajes aparecerán como: 🃏 Invalid card: El mensaje que sea'''
+    def __init__(self):
+        message = "🃏 Invalid card"
+        self.message = message
 
-    ...
+    def __str__(self):
+        return self.message
+
