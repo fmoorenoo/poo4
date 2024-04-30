@@ -2,13 +2,13 @@ from __future__ import annotations
 
 
 def load_card_glyphs(path: str = 'cards.dat') -> dict[str, str]:
-    diccionario = {"♣": "🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞", "♦": "🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎", "❤": "🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾", "♠": "🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮"}
+    diccionario = {"♣": "🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞", "◆": "🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎", "❤": "🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾", "♠": "🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮"}
     return diccionario
 
 
 class Card:
     CLUBS = "♣"
-    DIAMONDS = "♦"
+    DIAMONDS = "◆"
     HEARTS = "❤"
     SPADES = "♠"
     #           1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13
@@ -60,11 +60,13 @@ class Card:
 
     def __lt__(self, other: Card):
         '''Indica si una carta vale menos que otra'''
-        ...
+        if self.cmp_value > other.cmp_value:
+            return True
+        return False
 
     def __gt__(self, other: Card):
         '''Indica si una carta vale más que otra'''
-        if self.cmp_value > other.cmp_value:
+        if self.cmp_value < other.cmp_value:
             return True
         return False
 
@@ -74,12 +76,17 @@ class Card:
         1. El nuevo palo será el de la carta más alta.
         2. El nuevo valor será la suma de los valores de las cartas. Si valor pasa
         de 13 se convertirá en un AS.'''
-        ...
+        suits = [self.suit, other.suit]
+        newSuit = max(suits)
 
+        total = self.cmp_value + other.cmp_value 
+        if total > 13:
+            total = 1
+
+        return Card(total, newSuit)
 
     def is_ace(self) -> bool:
-        '''Indica si una carta es un AS'''
-        ...
+        return self.value == 'A'
 
 
     @classmethod
@@ -96,8 +103,7 @@ class Card:
 
 
 class InvalidCardError(Exception):
-    def __init__(self):
-        message = "🃏 Invalid card"
+    def __init__(self, message="🃏 Invalid card"):
         self.message = message
 
     def __str__(self):
