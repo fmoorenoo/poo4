@@ -71,19 +71,22 @@ class Card:
         return False
 
 
-    def __add__(self, other: Card) -> Card:
-        '''Suma de dos cartas:
-        1. El nuevo palo será el de la carta más alta.
-        2. El nuevo valor será la suma de los valores de las cartas. Si valor pasa
-        de 13 se convertirá en un AS.'''
-        suits = [self.suit, other.suit]
-        newSuit = max(suits)
-
-        total = self.cmp_value + other.cmp_value 
+    def __add__(self, other: 'Card') -> 'Card':
+        if self.value == 1:
+            total = 1
+            nuevoSuit = self.suit
+        else:
+            total = self.value + other.value
+            if self.value >= other.value:
+                nuevoSuit = self.suit
+            else:
+                nuevoSuit = other.suit
+    
         if total > 13:
             total = 1
 
-        return Card(total, newSuit)
+        return Card(total, nuevoSuit)
+    
 
     def is_ace(self) -> bool:
         return self.value == 'A'
